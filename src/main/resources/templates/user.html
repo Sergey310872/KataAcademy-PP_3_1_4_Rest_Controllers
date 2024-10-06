@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>User page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-dark bg-dark p-2 shadow">
+        <div class="nav-item text-left text-white fs-4">
+            <b id="navbar-username">username</b>
+            with roles:
+            <span id="navbar-userRoles">userRoles</span>
+        </div>
+        <ul class="navbar-nav mr-3">
+            <li class="nav-item text-nowrap">
+                <a class="nav-link px-3" href="/logout">Logout</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<div class="container-fluid mt-3">
+    <div class="row">
+        <div class="col-md-2 px-0">
+            <div class="d-flex flex-column flex-shrink-0 p-0 text-white">
+                <ul class="nav nav-pills flex-column">
+                    <li class="nav-item">
+                        <a href="#" data-bs-toggle="pill" class="nav-link active no-refresh">
+                            User
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-10 bg-light">
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="userInfo" role="tabpanel">
+                    <div class="container-fluid">
+                        <h2>User information-page</h2>
+                        <div class="card">
+                            <div class="container-fluid px-0 bg-light border">
+                                <h5 class="card-header">About user</h5>
+                            </div>
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Age</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                </tr>
+                                </thead>
+                                <tbody id="currentUser">
+                                <!-- Заполняется через JS-->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    async function loadCurrentUser() {
+        let url = "/rest/currentUser";
+        let response = await fetch(url);
+        if (response.ok) {
+            const currentUser = await response.json();
+            document.getElementById("navbar-username").textContent = currentUser.userName;
+            document.getElementById("navbar-userRoles").textContent = currentUser.roles;
+
+            const tableBody = document.getElementById('currentUser');
+            tableBody.innerHTML = '';
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${currentUser.id}</td>
+                <td>${currentUser.name}</td>
+                <td>${currentUser.lastName}</td>
+                <td>${currentUser.age}</td>
+                <td>${currentUser.userName}</td>
+                <td>${currentUser.roles}</td>
+                `;
+            tableBody.appendChild(row);
+        } else {
+            alert("Ошибка HTTP: " + response.status);
+        }
+    }
+
+    loadCurrentUser();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous">
+</script>
+</body>
+</html>

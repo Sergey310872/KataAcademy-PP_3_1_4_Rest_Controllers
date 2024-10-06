@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Admin panel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-dark bg-dark p-2 shadow">
+        <div class="nav-item text-left text-white fs-4">
+            <b id="navbar-username">username</b>
+            with roles:
+            <span id="navbar-userRoles">userRoles</span>
+        </div>
+        <ul class="navbar-nav mr-3">
+            <li class="nav-item text-nowrap">
+                <a class="nav-link px-3" href="/logout">Logout</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<div class="container-fluid mt-3">
+    <div class="row">
+        <div class="d-flex align-items-start">
+            <div class="col-md-2 px-0">
+                <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <button class="nav-link active" id="v-pills-admin-tab" data-bs-toggle="pill"
+                            data-bs-target="#v-pills-admin" type="button" role="tab" aria-controls="v-pills-admin"
+                            aria-selected="true">Admin
+                    </button>
+                    <button class="nav-link" id="v-pills-user-tab" data-bs-toggle="pill" data-bs-target="#v-pills-user"
+                            type="button" role="tab" aria-controls="v-pills-user" aria-selected="false">User
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-10 bg-light  h-100">
+                <div class="p-3 mb-2 bg-light text-dark">
+                    <div class="tab-content" id="v-pills-tabContent">
+                        <!-- ADMIN-->
+                        <div class="tab-pane fade show active" id="v-pills-admin" role="tabpanel"
+                             aria-labelledby="v-pills-admin-tab">
+                            <h2>Admin panel</h2>
+
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="users-tab" data-bs-toggle="tab"
+                                            data-bs-target="#users" type="button" role="tab" aria-controls="users"
+                                            aria-selected="true">Users Table
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="new-user-tab" data-bs-toggle="tab"
+                                            data-bs-target="#new-user" type="button" role="tab"
+                                            aria-controls="new-user"
+                                            aria-selected="false"
+                                            onclick="resetNewUser()">New User
+                                    </button>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="users" role="tabpanel"
+                                     aria-labelledby="home-tab">
+                                    <div class="card">
+                                        <div class="container-fluid px-0 bg-light border">
+                                            <h5 class="card-header">About user</h5>
+                                        </div>
+                                        <table class="table table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>First Name</th>
+                                                <th>Last Name</th>
+                                                <th>Age</th>
+                                                <th>Email</th>
+                                                <th>Role</th>
+                                                <th>Edit</th>
+                                                <th>Delete</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="users-table">
+                                            <!-- Заполняется через JS-->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane fade" id="new-user" role="tabpanel" aria-labelledby="profile-tab">
+                                    <form id="formElemAddUser">
+                                        <h5 class="card-header border">Add New User</h5>
+                                        <div class="p-3 mb-2 bg-white text-dark border">
+                                            <div class="container-sm">
+                                                <form id="new-user-form">
+                                                    <div class="d-flex justify-content-center">
+                                                        <div align="center">
+                                                            <div class="form-group">
+                                                                <b>First name</b>
+                                                                <input type="text" class="form-control" id="name"
+                                                                       name="name" required>
+                                                            </div>
+                                                            <div class="form-group row-centered">
+                                                                <b>Last name</b>
+                                                                <input type="text" class="form-control" id="lastName"
+                                                                       name="lastName" required>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <b>Age</b>
+                                                                <input type="number" class="form-control" id="age"
+                                                                       name="age">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <b>Email</b>
+                                                                <input type="email" class="form-control" id="email"
+                                                                       name="userName" required>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <b>Password</b>
+                                                                <input type="password" class="form-control"
+                                                                       id="password" name="password" required>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <b>Role</b>
+                                                                <select class="form-control" multiple id="roles"
+                                                                        name="roleList">
+                                                                </select>
+                                                            </div>
+                                                            <button type="submit" class="btn btn-success"
+                                                                    onclick="addNewUser()">Add new user
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- USER-->
+                        <div class="tab-pane fade" id="v-pills-user" role="tabpanel" aria-labelledby="v-pills-user-tab">
+                            <h2>User information-page</h2>
+                            <div class="card">
+                                <div class="container-fluid px-0 bg-light border">
+                                    <h5 class="card-header">About user</h5>
+                                </div>
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Age</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="currentUser">
+                                    <!-- Заполняется через JS-->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal Edit -->
+<form id="formElemEdit">
+    <div class="modal fade" id="EditUserModal" tabindex="-1" aria-labelledby="EditUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="EditUserModalLabel">Edit user</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="user-modal">
+                        <div class="d-flex justify-content-center">
+                            <div align="center">
+                                <div class="form-group">
+                                    <b>ID</b>
+                                    <input type="text" class="form-control" id="id-modal" name="id-1" disabled>
+                                    <input type="hidden" class="form-control" id="id-modal-h" name="id">
+                                </div>
+                                <div class="form-group">
+                                    <b>First Name</b>
+                                    <input type="text" class="form-control" id="firstName-modal" name="name">
+                                </div>
+                                <div class="form-group">
+                                    <b>Last Name</b>
+                                    <input type="text" class="form-control" id="lastName-modal" name="lastName">
+                                </div>
+                                <div class="form-group">
+                                    <b>Age</b>
+                                    <input type="number" class="form-control" id="age-modal" name="age">
+                                </div>
+                                <div class="form-group">
+                                    <b>Email</b>
+                                    <input type="email" class="form-control" id="email-modal" name="userName">
+                                </div>
+                                <div class="form-group">
+                                    <b>Password</b>
+                                    <input type="password" class="form-control" id="password-modal" name="password">
+                                </div>
+                                <div class="form-group">
+                                    <b>Roles</b>
+                                    <select class="form-control" multiple id="roles-modal" name="roleList">
+                                        <!-- Заполняется через JS-->
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" data-bs-toggle="modal"
+                            onclick="updateUserRest('EditUserModalLabel')">Edit
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- Modal Delete -->
+<div class="modal fade" id="DeleteUserModal" tabindex="-1" aria-labelledby="DeleteUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="DeleteUserModalLabel">Delete user</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="user-modal-delete">
+                    <div class="d-flex justify-content-center">
+                        <div align="center">
+                            <div class="form-group">
+                                <b>ID</b>
+                                <input type="text" class="form-control" id="id-modal-delete" name="id" disabled>
+                            </div>
+                            <div class="form-group">
+                                <b>First Name</b>
+                                <input type="text" class="form-control" id="firstName-modal-delete" name="firstName"
+                                       disabled>
+                            </div>
+                            <div class="form-group">
+                                <b>Last Name</b>
+                                <input type="text" class="form-control" id="lastName-modal-delete" name="lastName"
+                                       disabled>
+                            </div>
+                            <div class="form-group">
+                                <b>Age</b>
+                                <input type="number" class="form-control" id="age-modal-delete" name="age" disabled>
+                            </div>
+                            <div class="form-group">
+                                <b>Email</b>
+                                <input type="email" class="form-control" id="email-modal-delete" name="email" disabled>
+                            </div>
+                            <div class="form-group">
+                                <b>Roles</b>
+                                <select class="form-control" multiple id="roles-modal-delete"
+                                        name="roles" disabled>
+                                    <!-- Заполняется через JS-->
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger b-1" data-bs-dismiss="modal"
+                        onclick="deleteUserRest('id-modal-delete')">Delete
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    async function loadUsersList() {
+        let url = "/rest/users";
+        let response = await fetch(url);
+        if (response.ok) {
+            let json = await response.json();
+            const tableBody = document.getElementById('users-table');
+            tableBody.innerHTML = '';
+            for (let jsonKey in json) {
+                const userRow = json[jsonKey];
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                <td>${userRow.id}</td>
+                <td>${userRow.name}</td>
+                <td>${userRow.lastName}</td>
+                <td>${userRow.age}</td>
+                <td>${userRow.userName}</td>
+                <td>${userRow.roles}</td>
+                <td>
+                    <button type="button"
+                        onclick="editUserModal(${userRow.id})"
+                        class="btn btn-info"
+                        data-bs-dismiss="modal"
+                        data-bs-toggle="modal"
+                        data-bs-target="#EditUserModal">Edit
+                    </button>
+                </td>
+                <td>
+                    <button type="button"
+                        onclick="deleteUserModal(${userRow.id})"
+                        class="btn btn-danger"
+                        data-bs-dismiss="modal"
+                        data-bs-toggle="modal"
+                        data-bs-target="#DeleteUserModal">Delete
+                    </button>
+                </td>
+                `;
+                tableBody.appendChild(row);
+            }
+        } else {
+            alert("Ошибка HTTP: " + response.status);
+        }
+    }
+
+    async function editUserModal(userId) {
+        let url = "/rest/user/" + userId;
+        let response = await fetch(url);
+        if (response.ok) {
+            let user1 = await response.json();
+
+            document.getElementById('id-modal-h').value = user1.id;
+            document.getElementById('id-modal').value = user1.id;
+            document.getElementById('firstName-modal').value = user1.name;
+            document.getElementById('lastName-modal').value = user1.lastName;
+            document.getElementById('age-modal').value = user1.age;
+            document.getElementById('email-modal').value = user1.userName;
+
+            const listRole = user1.roleList;
+            const rolesSelector = document.getElementById('roles-modal');
+            const options = Array.from(rolesSelector.options);
+            for (let fromKey in options) {
+                options[fromKey].selected = (listRole.some(role => role.roleName === options[fromKey].textContent));
+            }
+
+        } else {
+            alert("Ошибка HTTP: " + response.status);
+        }
+    }
+
+    async function deleteUserModal(userId) {
+        let url = "/rest/user/" + userId;
+        let response = await fetch(url);
+        if (response.ok) {
+            let user1 = await response.json();
+
+            document.getElementById('id-modal-delete').value = user1.id;
+            document.getElementById('firstName-modal-delete').value = user1.name;
+            document.getElementById('lastName-modal-delete').value = user1.lastName;
+            document.getElementById('age-modal-delete').value = user1.age;
+            document.getElementById('email-modal-delete').value = user1.userName;
+
+            const listRole = user1.roleList;
+            const rolesSelector = document.getElementById('roles-modal-delete');
+            const options = Array.from(rolesSelector.options);
+            for (let fromKey in options) {
+                options[fromKey].selected = (listRole.some(role => role.roleName === options[fromKey].textContent));
+            }
+        } else {
+            alert("Ошибка HTTP: " + response.status);
+        }
+    }
+
+    // *** Загрузка всех ролей
+    async function getAllRoles() {
+        let url = "/rest/roles";
+        let response = await fetch(url);
+        if (response.ok) {
+            const listRole = await response.json();
+
+            const rolesSelectorEdit = document.getElementById('roles-modal');
+            const rolesSelectorDelete = document.getElementById('roles-modal-delete');
+            const rolesSelectorAddNewUser = document.getElementById('roles');
+
+            for (let Key in listRole) {
+                const userRole = listRole[Key];
+
+                const option = document.createElement('option');
+                option.value = userRole.id;
+                option.text = userRole.roleName;
+                rolesSelectorEdit.appendChild(option);
+
+                const option1 = document.createElement('option');
+                option1.value = userRole.id;
+                option1.text = userRole.roleName;
+                rolesSelectorDelete.appendChild(option1);
+
+                const option2 = document.createElement('option');
+                option2.value = userRole.id;
+                option2.text = userRole.roleName;
+                rolesSelectorAddNewUser.appendChild(option2);
+            }
+        } else {
+            alert("Ошибка HTTP: " + response.status);
+        }
+    }
+
+    // *** Получаем текущего пользователя
+    async function loadCurrentUser() {
+        let url = "/rest/currentUser";
+        let response = await fetch(url);
+        if (response.ok) {
+            const currentUser = await response.json();
+            document.getElementById("navbar-username").textContent = currentUser.userName;
+            document.getElementById("navbar-userRoles").textContent = currentUser.roles;
+
+            const tableBody = document.getElementById('currentUser');
+            tableBody.innerHTML = '';
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${currentUser.id}</td>
+                <td>${currentUser.name}</td>
+                <td>${currentUser.lastName}</td>
+                <td>${currentUser.age}</td>
+                <td>${currentUser.userName}</td>
+                <td>${currentUser.roles}</td>
+                `;
+            tableBody.appendChild(row);
+        } else {
+            alert("Ошибка HTTP: " + response.status);
+        }
+    }
+
+    function addNewUser() {//'EditUserModalLabel'
+        formElemAddUser.onsubmit = async (e) => {
+            e.preventDefault();
+
+            let response = await fetch('/rest/adduser', {
+                method: 'POST',
+                body: new FormData(formElemAddUser)
+            });
+            if (response.ok) {
+                loadUsersList();
+            } else {
+                alert("Ошибка HTTP: " + response.status);
+            }
+        };
+
+        document.getElementById('users').classList.value = "tab-pane fade show active";
+        document.getElementById('new-user').classList.value = "tab-pane fade";
+
+        document.getElementById('users-tab').classList.value = "nav-link active";
+        document.getElementById('new-user-tab').classList.value = "nav-link";
+    }
+
+    function resetNewUser() {
+        document.getElementById('formElemAddUser').reset();
+    }
+
+    function updateUserRest() {//'EditUserModalLabel'
+        formElemEdit.onsubmit = async (e) => {
+            e.preventDefault();
+
+            let response = await fetch('/rest/update', {
+                method: 'POST',
+                body: new FormData(formElemEdit)
+            });
+            if (response.ok) {
+                loadUsersList();
+            } else {
+                alert("Ошибка HTTP: " + response.status);
+            }
+        };
+    }
+
+    async function deleteUserRest(idFromModal) {
+        let userId = document.getElementById(idFromModal).value;
+        const url = '/rest/user/' + userId;
+        let response = await fetch(url, {
+            method: 'DELETE',
+        });
+        if (response.ok) {
+            loadUsersList();
+        } else {
+            alert("Ошибка HTTP: " + response.status);
+        }
+    }
+
+    loadUsersList();
+    getAllRoles();
+    loadCurrentUser();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous">
+</script>
+</body>
+</html>
