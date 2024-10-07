@@ -15,6 +15,7 @@ public class Role implements GrantedAuthority {
     private String roleName;
 
     @ManyToMany
+    @Transient
     private List<User> userList;
 
     public Role() {
